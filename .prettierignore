@@ -1,0 +1,7 @@
+dist/
+build/
+node_modules/
+*.config.js
+*.min.js
+package-lock.json
+yarn.lock

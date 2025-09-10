@@ -43,13 +43,13 @@ const Register = () => {
                     
                     <div className="text-center text-sm text-gray-500">
                         Al registrarte, aceptas nuestros{' '}
-                        <a href="#" className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                        <Link href="#" className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
                             Términos de Servicio
-                        </a>
+                        </Link>
                         {' '}y{' '}
-                        <a href="#" className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                        <Link href="#" className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
                             Política de Privacidad
-                        </a>
+                        </Link>
                     </div>
                 </form>
                 

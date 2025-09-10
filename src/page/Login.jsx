@@ -1,6 +1,8 @@
 import { Link } from "react-router";
 
+
 const Login = () => {
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
             <div className="max-w-md w-full space-y-8">
@@ -14,6 +16,7 @@ const Login = () => {
                         <div>
                             <input 
                                 type="text" 
+                                name="login"
                                 placeholder="Nombre de usuario" 
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
                             />
@@ -21,6 +24,7 @@ const Login = () => {
                         <div>
                             <input 
                                 type="password" 
+                                name="password"
                                 placeholder="Contraseña" 
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
                             />
@@ -35,9 +39,9 @@ const Login = () => {
                     </button>
                     
                     <div className="text-center">
-                        <a href="#" className="text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                        <Link to='' className="text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200">
                             ¿Olvidaste tu contraseña?
-                        </a>
+                        </Link>
                     </div>
                 </form>
                 

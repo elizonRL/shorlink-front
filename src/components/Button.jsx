@@ -1,6 +1,6 @@
 const Button = ({children, handelClik, classButon })=>{
     return(
-        <button onClick={()=> handelClik} className={classButon}>
+        <button onClick={handelClik} className={classButon}>
             {children}
         </button>
     )

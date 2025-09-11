@@ -1,4 +1,3 @@
-import Button from "./Button";
 
 const LinksHistory = ({ shortenedLinks, handleCopy, copied }) => {
     return (
@@ -37,14 +36,6 @@ const LinksHistory = ({ shortenedLinks, handleCopy, copied }) => {
                                             >
                                                 {copied === link.id ? '✅ Copiado' : '📋 Copiar'}
                                             </button>
-                                            {/* <Button handelClik={handleCopy}
-                                                classButon={`px-3 py-1 rounded-lg text-sm font-medium transition-all duration-200 ${copied === link.id
-                                                        ? 'bg-green-100 text-green-800'
-                                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                                    }`}
-                                            >
-                                                {copied === link.id ? '✅ Copiado' : '📋 Copiar'}
-                                            </Button> */}
                                         </div>
 
                                         <p className="text-gray-600 text-sm mb-3 truncate bg-gray-50 px-3 py-2 rounded-lg">

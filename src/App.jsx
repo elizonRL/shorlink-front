@@ -1,15 +1,21 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import './App.css'
 
 import Header from './components/Header'
 import HeroSection from './components/HeroSection'
 import LinksHistory from './components/LinksHistory'
 
+
+
 function App() {
   const [url, setUrl] = useState('')
   const [shortenedLinks, setShortenedLinks] = useState([])
   const [user, setUser] = useState(null)
   const [copied, setCopied] = useState(null)
+  
+  //hook de react-router para navegar hacia una ruta 
+  const navigate = useNavigate()
 
   const handleShortenUrl = (e) => {
     e.preventDefault()
@@ -35,6 +41,7 @@ function App() {
 
   const handleLogin = () => {
     setUser({ username: 'Usuario Demo', email: 'demo@shorlink.app' })
+    navigate('/login')
   }
 
   const handleLogout = () => {

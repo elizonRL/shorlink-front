@@ -1,19 +1,19 @@
-import {  createContext, useContext } from "react";
+import { createContext, useContext } from "react";
 
-const UserContext = createContext()
+const UserContext = createContext();
 
-export const UserProvider =({Children})=>{
-    const user = { username: 'Usuario Demo', email: 'demo@shorlink.app' }
-    return(
-        <UserContext.Provider value={user}>
-            {Children}
+export const UserProvider = ({ children }) => {
+    const contextUser = { username: 'Usuario Demo', email: 'demo@shorlink.app' }
+    return (
+        <UserContext.Provider value={contextUser}>
+            {children}
         </UserContext.Provider>
     )
 
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const useUserContext = ()=>{
+export const useUserContext = () => {
     const context = useContext(UserContext)
     return context
 }

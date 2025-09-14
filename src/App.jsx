@@ -5,6 +5,7 @@ import './App.css'
 import Header from './components/Header'
 import HeroSection from './components/HeroSection'
 import LinksHistory from './components/LinksHistory'
+import { useUserContext } from './Context/userContext'
 
 
 
@@ -13,7 +14,10 @@ function App() {
   const [shortenedLinks, setShortenedLinks] = useState([])
   const [user, setUser] = useState(null)
   const [copied, setCopied] = useState(null)
+
+  const contextUser = useUserContext()
   
+  console.log(contextUser)
   //hook de react-router para navegar hacia una ruta 
   const navigate = useNavigate()
 

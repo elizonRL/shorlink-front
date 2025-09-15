@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { use, useState } from 'react'
 import { useNavigate } from 'react-router'
 import './App.css'
 
@@ -17,7 +18,10 @@ function App() {
 
   const contextUser = useUserContext()
   
-  console.log(contextUser)
+  useEffect(() => {
+    setUser(contextUser.user)
+  }, [contextUser.user])
+
   //hook de react-router para navegar hacia una ruta 
   const navigate = useNavigate()
 
@@ -44,7 +48,6 @@ function App() {
   }
 
   const handleLogin = () => {
-    setUser({ username: 'Usuario Demo', email: 'demo@shorlink.app' })
     navigate('/login')
   }
 
@@ -53,7 +56,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-x-hidden">
       <Header
       handleLogin={handleLogin}
       handleLogout={handleLogout}

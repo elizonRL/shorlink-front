@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 
-export const useLogin = (url, user) => {
+export const useRegister = (url, userData) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        const fetchLogin = async () => {
+        const fetchRegister = async () => {
             try {
                 setLoading(true);
                 setError(null);
@@ -16,24 +16,23 @@ export const useLogin = (url, user) => {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(user),
+                    body: JSON.stringify(userData),
                 });
                 
                 const result = await response.json();
                 
-                
                 if (!response.ok) {
                     switch (response.status) {
                         case 400:
-                            throw new Error('Datos inválidos. Verifica tu usuario y contraseña.');
-                        case 401:
-                            throw new Error('Credenciales incorrectas. Verifica tu usuario y contraseña.');
-                        case 404:
-                            throw new Error('Usuario no encontrado. ¿Te has registrado?');
+                            throw new Error('Datos inválidos. Verifica que todos los campos estén completos.');
+                        case 409:
+                            throw new Error('El usuario o email ya existe. Intenta con otros datos.');
+                        case 422:
+                            throw new Error('Email inválido o contraseña muy débil.');
                         case 500:
                             throw new Error('Error del servidor. Inténtalo más tarde.');
                         default:
-                            throw new Error(result.message || 'Error al iniciar sesión');
+                            throw new Error(result.message || 'Error al crear la cuenta');
                     }
                 }
                 
@@ -49,11 +48,10 @@ export const useLogin = (url, user) => {
             }
         };
         
-        if (user) {
-            fetchLogin();
+        if (userData) {
+            fetchRegister();
         }
-    }, [url, user]);
+    }, [url, userData]);
 
     return { loading, error, data };
 };
-

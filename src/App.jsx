@@ -6,7 +6,8 @@ import './App.css'
 import Header from './components/Header'
 import HeroSection from './components/HeroSection'
 import LinksHistory from './components/LinksHistory'
-import { useUserContext } from './Context/userContext'
+import AuthGuard from './components/AuthGuard'
+import { useUserContext, logoutUser } from './Context/userContext'
 
 
 
@@ -52,31 +53,33 @@ function App() {
   }
 
   const handleLogout = () => {
-    setUser(null)
+    logoutUser()
     navigate('/login')
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-x-hidden">
-      <Header
-      handleLogin={handleLogin}
-      handleLogout={handleLogout}
-      user={user}
-      />
-      {/* Hero Section */}
-      <HeroSection
-        handleShortenUrl={handleShortenUrl}
-        url={url}
-        setUrl={setUrl}
-      />
+    <AuthGuard>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 overflow-x-hidden">
+        <Header
+        handleLogin={handleLogin}
+        handleLogout={handleLogout}
+        user={user}
+        />
+        {/* Hero Section */}
+        <HeroSection
+          handleShortenUrl={handleShortenUrl}
+          url={url}
+          setUrl={setUrl}
+        />
 
-      {/* Lista de Enlaces Mejorada */}
-      <LinksHistory
-        shortenedLinks={shortenedLinks}
-        handleCopy={handleCopy}
-        copied={copied}
-      />
-    </div>
+        {/* Lista de Enlaces Mejorada */}
+        <LinksHistory
+          shortenedLinks={shortenedLinks}
+          handleCopy={handleCopy}
+          copied={copied}
+        />
+      </div>
+    </AuthGuard>
   )
 }
 

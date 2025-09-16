@@ -53,6 +53,7 @@ function App() {
 
   const handleLogout = () => {
     setUser(null)
+    navigate('/login')
   }
 
   return (

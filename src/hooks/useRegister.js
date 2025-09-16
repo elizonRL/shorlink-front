@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { api } from '../services/api';
 
-export const useRegister = (url, userData) => {
+export const useRegister = (_, userData) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
@@ -11,15 +12,7 @@ export const useRegister = (url, userData) => {
                 setLoading(true);
                 setError(null);
                 
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(userData),
-                });
-                
-                const result = await response.json();
+                const result = await api.register(userData);
                 
                 if (!response.ok) {
                     switch (response.status) {

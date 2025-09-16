@@ -13,7 +13,7 @@ const HeroSection = ({url, setUrl, handleShortenUrl}) => {
 
                     {/* Formulario Mejorado */}
                     <div className="backdrop-blur-md bg-white/90 rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 lg:p-8 border border-white/20 mx-2 sm:mx-0">
-                        <form onSubmit={handleShortenUrl} className="flex flex-col gap-3 sm:gap-4">
+                        <form onSubmit={handleShortenUrl} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                             <div className="flex-1 relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 sm:pl-4 flex items-center pointer-events-none">
                                     <span className="text-gray-400 text-base sm:text-lg">🔗</span>

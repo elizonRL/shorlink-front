@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { use, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import './App.css'
 
@@ -8,38 +7,38 @@ import HeroSection from './components/HeroSection'
 import LinksHistory from './components/LinksHistory'
 import AuthGuard from './components/AuthGuard'
 import { useUserContext, logoutUser } from './Context/userContext'
+import { useCreateShortUrl, useGetShortUrls } from './hooks/useShortUrl'
 
 
 
 function App() {
   const [url, setUrl] = useState('')
-  const [shortenedLinks, setShortenedLinks] = useState([])
   const [user, setUser] = useState(null)
   const [copied, setCopied] = useState(null)
 
   const contextUser = useUserContext()
+  const { createShortUrl, loading: createLoading } = useCreateShortUrl()
+  const { data: shortenedLinks, refetch } = useGetShortUrls()
   
   useEffect(() => {
     setUser(contextUser.user)
   }, [contextUser.user])
 
-  //hook de react-router para navegar hacia una ruta 
   const navigate = useNavigate()
 
-  const handleShortenUrl = (e) => {
+  const handleShortenUrl = async (e) => {
     e.preventDefault()
     if (!url.trim()) return
-    const newLink = {
-
-      id: Date.now(),
-      originalUrl: url,
-      shortUrl: `https://shorlink.app/${Math.random().toString(36).substr(2, 8)}`,
-      clicks: Math.floor(Math.random() * 100),
-      createdAt: new Date().toLocaleDateString()
-    }
     
-    setShortenedLinks([newLink, ...shortenedLinks])
-    setUrl('')
+    try {
+      console.log('Sending URL:', url)
+      const result = await createShortUrl(url)
+      console.log('API Response:', result)
+      setUrl('')
+      refetch() // Refresh the list
+    } catch (error) {
+      console.error('Error creating short URL:', error)
+    }
   }
 
   const handleCopy = async (text, id) => {
@@ -74,7 +73,7 @@ function App() {
 
         {/* Lista de Enlaces Mejorada */}
         <LinksHistory
-          shortenedLinks={shortenedLinks}
+          shortenedLinks={shortenedLinks || []}
           handleCopy={handleCopy}
           copied={copied}
         />

@@ -2,6 +2,9 @@ import { Link } from "react-router"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router"
 import { useRegister } from "../hooks/useRegister"
+import AuthLayout from "../components/AuthLayout"
+import Input from "../components/Input"
+import ErrorMessage from "../components/ErrorMessage"
 
 const Register = () => {
     const navigate = useNavigate()
@@ -61,83 +64,62 @@ const Register = () => {
         }
     }, [data, navigate])
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-            <div className="max-w-md w-full space-y-8">
-                <div className="text-center">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Crear Cuenta</h1>
-                    <p className="text-gray-600">Únete a ShorLink y comienza a acortar enlaces</p>
+        <AuthLayout 
+            title="Crear Cuenta" 
+            subtitle="Únete a ShorLink y comienza a acortar enlaces"
+        >
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <ErrorMessage message={error || validationError} />
+                
+                <div className="space-y-4">
+                    <Input 
+                        type="text" 
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                        placeholder="Nombre de usuario" 
+                        required
+                    />
+                    <Input 
+                        type="email" 
+                        value={userEmail}
+                        onChange={(e) => setUserEmail(e.target.value)}
+                        placeholder="Correo electrónico" 
+                        required
+                    />
+                    <Input 
+                        type="password" 
+                        value={userPass}
+                        onChange={(e) => setUserPass(e.target.value)}
+                        placeholder="Contraseña" 
+                        required
+                    />
+                    <Input 
+                        type="password" 
+                        value={confirmPass}
+                        onChange={(e) => setConfirmPass(e.target.value)}
+                        placeholder="Confirmar contraseña" 
+                        required
+                    />
                 </div>
                 
-                <form className="bg-white p-8 rounded-xl shadow-lg space-y-6">
-                    {(error || validationError) && (
-                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                            {error || validationError}
-                        </div>
-                    )}
-                    
-                    <div className="space-y-4">
-                        <div>
-                            <input 
-                                type="text" 
-                                value={userName}
-                                onChange={(e) => setUserName(e.target.value)}
-                                placeholder="Nombre de usuario" 
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <input 
-                                type="email" 
-                                value={userEmail}
-                                onChange={(e) => setUserEmail(e.target.value)}
-                                placeholder="Correo electrónico" 
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <input 
-                                type="password" 
-                                value={userPass}
-                                onChange={(e) => setUserPass(e.target.value)}
-                                placeholder="Contraseña" 
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <input 
-                                type="password" 
-                                value={confirmPass}
-                                onChange={(e) => setConfirmPass(e.target.value)}
-                                placeholder="Confirmar contraseña" 
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200 placeholder-gray-400"
-                                required
-                            />
-                        </div>
-                    </div>
-                    
-                    <button 
-                        onClick={handleSubmit}
-                        type="submit"
-                        disabled={loading}
-                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    >
-                        {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
-                    </button>
-                    
-                    <div className="text-center text-sm text-gray-500">
-                        Al registrarte, aceptas nuestros{' '}
-                        <Link href="#" className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
-                            Términos de Servicio
-                        </Link>
-                        {' '}y{' '}
-                        <Link href="#" className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
-                            Política de Privacidad
-                        </Link>
-                    </div>
-                </form>
+                <button 
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                    {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
+                </button>
+                
+                <div className="text-center text-sm text-gray-500">
+                    Al registrarte, aceptas nuestros{' '}
+                    <Link href="#" className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                        Términos de Servicio
+                    </Link>
+                    {' '}y{' '}
+                    <Link href="#" className="text-blue-600 hover:text-blue-800 transition-colors duration-200">
+                        Política de Privacidad
+                    </Link>
+                </div>
                 
                 <div className="text-center">
                     <p className="text-gray-600">
@@ -147,8 +129,8 @@ const Register = () => {
                         </Link>
                     </p>
                 </div>
-            </div>
-        </div>
+            </form>
+        </AuthLayout>
     )
 }
 

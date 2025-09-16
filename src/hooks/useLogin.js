@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { api } from '../services/api';
 
-export const useLogin = (url, user) => {
+export const useLogin = (_, user) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
@@ -11,15 +12,7 @@ export const useLogin = (url, user) => {
                 setLoading(true);
                 setError(null);
                 
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(user),
-                });
-                
-                const result = await response.json();
+                const result = await api.login(user);
                 
                 
                 if (!response.ok) {

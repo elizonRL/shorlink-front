@@ -15,7 +15,7 @@ const Register = () => {
     const [registerData, setRegisterData] = useState(null)
     const [validationError, setValidationError] = useState('')
 
-    const { loading, error, data } = useRegister("http://localhost:3000/api/users", registerData);
+    const { loading, error, data } = useRegister(null, registerData);
 
     const handleSubmit = (e) => {
         e.preventDefault()

@@ -44,7 +44,7 @@ export const useRegister = (_, userData) => {
         if (userData) {
             fetchRegister();
         }
-    }, [url, userData]);
+    }, [userData]);
 
     return { loading, error, data };
 };

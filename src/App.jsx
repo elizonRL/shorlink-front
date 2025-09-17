@@ -31,13 +31,11 @@ function App() {
     if (!url.trim()) return
     
     try {
-      console.log('Sending URL:', url)
-      const result = await createShortUrl(url)
-      console.log('API Response:', result)
+      await createShortUrl(url)
       setUrl('')
       refetch() // Refresh the list
     } catch (error) {
-      console.error('Error creating short URL:', error)
+      // Error is handled by the hook
     }
   }
 

@@ -1,7 +1,6 @@
 
 
 const Header = ({user, handleLogout, handleLogin})=>{
-  console.log(user)
     return(
         <>
       {/* Navbar con Glassmorphism */}

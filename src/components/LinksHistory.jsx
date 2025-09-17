@@ -45,16 +45,7 @@ const LinksHistory = ({ shortenedLinks, handleCopy, copied }) => {
                                         </p>
                                     </div>
 
-                                    <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-6 text-xs sm:text-sm text-gray-500">
-                                        <div className="flex items-center space-x-1">
-                                            <span>👆</span>
-                                            <span className="font-medium">{link.clicks} clics</span>
-                                        </div>
-                                        <div className="flex items-center space-x-1">
-                                            <span>📅</span>
-                                            <span>Creado: {link.createdAt}</span>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         ))}

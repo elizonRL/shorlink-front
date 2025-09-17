@@ -10,13 +10,10 @@ export const useCreateShortUrl = () => {
         try {
             setLoading(true);
             setError(null);
-            console.log('Hook: Creating short URL for:', originalUrl);
             const result = await api.createShortUrl(originalUrl);
-            console.log('Hook: Result received:', result);
             setData(result);
             return result;
         } catch (err) {
-            console.error('Hook: Error creating short URL:', err);
             setError(err.message);
             throw err;
         } finally {

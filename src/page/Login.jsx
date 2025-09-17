@@ -21,7 +21,7 @@ const Login = () => {
             password: userPass
         })
     }
-    const { loading, error, data } = useLogin("http://localhost:3000/api/users/login", loginData);
+    const { loading, error, data } = useLogin(null, loginData);
     
     useEffect(() => {
         if(data){

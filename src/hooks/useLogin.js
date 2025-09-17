@@ -13,23 +13,6 @@ export const useLogin = (_, user) => {
                 setError(null);
                 
                 const result = await api.login(user);
-                
-                
-                if (!response.ok) {
-                    switch (response.status) {
-                        case 400:
-                            throw new Error('Datos inválidos. Verifica tu usuario y contraseña.');
-                        case 401:
-                            throw new Error('Credenciales incorrectas. Verifica tu usuario y contraseña.');
-                        case 404:
-                            throw new Error('Usuario no encontrado. ¿Te has registrado?');
-                        case 500:
-                            throw new Error('Error del servidor. Inténtalo más tarde.');
-                        default:
-                            throw new Error(result.message || 'Error al iniciar sesión');
-                    }
-                }
-                
                 setData(result);
             } catch (err) {
                 if (err.name === 'TypeError' || err.message.includes('fetch')) {
@@ -45,7 +28,7 @@ export const useLogin = (_, user) => {
         if (user) {
             fetchLogin();
         }
-    }, [url, user]);
+    }, [user]);
 
     return { loading, error, data };
 };

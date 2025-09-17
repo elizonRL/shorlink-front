@@ -13,15 +13,10 @@ const apiRequest = async (endpoint, options = {}) => {
         ...options,
     };
 
-    console.log('API Request:', `${API_BASE_URL}${endpoint}`, config);
-    
     const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
-    
-    console.log('API Response Status:', response.status);
     
     if (!response.ok) {
         const errorText = await response.text();
-        console.error('API Error Response:', errorText);
         let error;
         try {
             error = JSON.parse(errorText);
@@ -31,9 +26,7 @@ const apiRequest = async (endpoint, options = {}) => {
         throw new Error(error.message || `HTTP ${response.status}`);
     }
     
-    const result = await response.json();
-    console.log('API Success Response:', result);
-    return result;
+    return response.json();
 };
 
 // API methods

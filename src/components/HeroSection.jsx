@@ -1,4 +1,4 @@
-const HeroSection = ({url, setUrl, handleShortenUrl}) => {
+const HeroSection = ({url, setUrl, handleShortenUrl, loading}) => {
     return (
         <>
             <div className="relative overflow-hidden">
@@ -29,10 +29,22 @@ const HeroSection = ({url, setUrl, handleShortenUrl}) => {
                             </div>
                             <button
                                 type="submit"
-                                className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base lg:text-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                                disabled={loading}
+                                className={`w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base lg:text-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl disabled:scale-100 disabled:cursor-not-allowed ${
+                                    loading ? 'animate-pulse' : ''
+                                }`}
                             >
-                                <span className="hidden sm:inline">✨ Acortar Enlace</span>
-                                <span className="sm:hidden">✨ Acortar</span>
+                                {loading ? (
+                                    <>
+                                        <span className="hidden sm:inline">🔄 Creando...</span>
+                                        <span className="sm:hidden">🔄 Creando</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className="hidden sm:inline">✨ Acortar Enlace</span>
+                                        <span className="sm:hidden">✨ Acortar</span>
+                                    </>
+                                )}
                             </button>
                         </form>
                     </div>

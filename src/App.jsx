@@ -7,7 +7,7 @@ import HeroSection from './components/HeroSection'
 import LinksHistory from './components/LinksHistory'
 import AuthGuard from './components/AuthGuard'
 import { useUserContext, logoutUser } from './Context/userContext'
-import { useCreateShortUrl, useGetShortUrls } from './hooks/useShortUrl'
+import { useCreateShortUrl, useGetShortUrls, useDeleteShortUrl } from './hooks/useShortUrl'
 
 
 
@@ -15,10 +15,21 @@ function App() {
   const [url, setUrl] = useState('')
   const [user, setUser] = useState(null)
   const [copied, setCopied] = useState(null)
+  const [localLinks, setLocalLinks] = useState([])
+  const [deletingId, setDeletingId] = useState(null)
+  const [newLinkId, setNewLinkId] = useState(null)
 
   const contextUser = useUserContext()
   const { createShortUrl, loading: createLoading } = useCreateShortUrl()
   const { data: shortenedLinks, refetch } = useGetShortUrls()
+  const { deleteShortUrl } = useDeleteShortUrl()
+
+  // Update local links when API data changes
+  useEffect(() => {
+    if (shortenedLinks) {
+      setLocalLinks(shortenedLinks)
+    }
+  }, [shortenedLinks])
   
   useEffect(() => {
     setUser(contextUser.user)
@@ -31,8 +42,15 @@ function App() {
     if (!url.trim()) return
     
     try {
-      await createShortUrl(url)
+      const result = await createShortUrl(url)
       setUrl('')
+      
+      // Add new link with animation
+      if (result) {
+        setNewLinkId(result.id || result._id)
+        setTimeout(() => setNewLinkId(null), 1000)
+      }
+      
       refetch() // Refresh the list
     } catch (error) {
       // Error is handled by the hook
@@ -43,6 +61,29 @@ function App() {
     await navigator.clipboard.writeText(text)
     setCopied(id)
     setTimeout(() => setCopied(null), 2000)
+  }
+
+  const handleDelete = async (shortUrl) => {
+    const shortCode = shortUrl.split('/').pop()
+    const linkToDelete = localLinks.find(link => link.shortUrl.endsWith(shortCode))
+    
+    if (!linkToDelete) return
+    
+    // Start delete animation
+    setDeletingId(linkToDelete.id || linkToDelete._id)
+    
+    // Wait for animation then remove
+    setTimeout(() => {
+      const originalLinks = [...localLinks]
+      setLocalLinks(prev => prev.filter(link => !link.shortUrl.endsWith(shortCode)))
+      setDeletingId(null)
+      
+      // Actually delete from server
+      deleteShortUrl(shortCode).catch(() => {
+        // Revert on error
+        setLocalLinks(originalLinks)
+      })
+    }, 300)
   }
 
   const handleLogin = () => {
@@ -67,13 +108,17 @@ function App() {
           handleShortenUrl={handleShortenUrl}
           url={url}
           setUrl={setUrl}
+          loading={createLoading}
         />
 
         {/* Lista de Enlaces Mejorada */}
         <LinksHistory
-          shortenedLinks={shortenedLinks || []}
+          shortenedLinks={localLinks}
           handleCopy={handleCopy}
+          handleDelete={handleDelete}
           copied={copied}
+          deletingId={deletingId}
+          newLinkId={newLinkId}
         />
       </div>
     </AuthGuard>

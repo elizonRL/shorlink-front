@@ -75,3 +75,24 @@ export const useGetShortUrlByCode = (shortCode) => {
 
     return { data, loading, error };
 };
+
+export const useDeleteShortUrl = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const deleteShortUrl = async (shortUrlCode) => {
+        try {
+            setLoading(true);
+            setError(null);
+            await api.deleteShortUrl(shortUrlCode);
+            return true;
+        } catch (err) {
+            setError(err.message);
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { deleteShortUrl, loading, error };
+};

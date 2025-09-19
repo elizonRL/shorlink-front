@@ -41,6 +41,10 @@ export const api = {
     
     getShortUrlByCode: (shortCode) => apiRequest(`/${shortCode}`),
     
+    deleteShortUrl: (shortUrlCode) => apiRequest(`/${shortUrlCode}`, {
+        method: 'DELETE',
+    }),
+    
     // Auth
     login: (data) => apiRequest('/users/login', {
         method: 'POST',
